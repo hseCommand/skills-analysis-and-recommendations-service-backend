@@ -6,7 +6,6 @@ import com.hse.skillsevaluation.repositry.SkillRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
@@ -35,7 +34,7 @@ public class SkillServiceImpl implements SkillService{
 
     @Override
     public List<Skill> getSkillByTags(List<Tag> tags) {
-        return skillRepository.findSkillByTags(tags);
+        return skillRepository.findDistinctSkillsByTagsIn(tags);
     }
 
     @Override
