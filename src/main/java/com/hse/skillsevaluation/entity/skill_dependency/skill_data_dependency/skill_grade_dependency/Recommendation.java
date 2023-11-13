@@ -15,9 +15,9 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Recommendation {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private int id;
 
-    private String message;
+  private String message;
 }

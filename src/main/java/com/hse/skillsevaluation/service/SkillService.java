@@ -7,7 +7,9 @@ import java.util.List;
 public interface SkillService {
   Skill getSkillById(Long id);
 
-  List<Skill> getSkillByTags(List<Tag> tags);
+  List<Skill> getSkillsByTags(List<Tag> tags);
+
+  List<Skill> getAllSkills();
 
   void saveSkill(Skill skill);
 

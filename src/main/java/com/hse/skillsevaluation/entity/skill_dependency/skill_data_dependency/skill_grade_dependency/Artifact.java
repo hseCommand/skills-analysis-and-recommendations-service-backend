@@ -15,9 +15,9 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Artifact {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private Long id;
 
-    private String artifact;
+  private String artifact;
 }
