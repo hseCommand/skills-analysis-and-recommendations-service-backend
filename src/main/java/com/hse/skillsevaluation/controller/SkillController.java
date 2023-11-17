@@ -1,7 +1,7 @@
 package com.hse.skillsevaluation.controller;
 
-import com.hse.skillsevaluation.entity.Skill;
-import com.hse.skillsevaluation.entity.skill_dependency.Tag;
+import com.hse.skillsevaluation.entity.skill.Skill;
+import com.hse.skillsevaluation.entity.skill.Tag;
 import com.hse.skillsevaluation.service.SkillService;
 import java.util.List;
 import lombok.RequiredArgsConstructor;

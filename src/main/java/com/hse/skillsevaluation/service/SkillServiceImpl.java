@@ -1,7 +1,6 @@
 package com.hse.skillsevaluation.service;
 
-import com.hse.skillsevaluation.entity.Skill;
-import com.hse.skillsevaluation.entity.skill_dependency.Tag;
+import com.hse.skillsevaluation.entity.skill.Skill;
 import com.hse.skillsevaluation.repositry.SkillRepository;
 import java.util.List;
 import java.util.Optional;
@@ -27,12 +26,7 @@ public class SkillServiceImpl implements SkillService {
     }
     return skill;
   }
-
-  @Override
-  public List<Skill> getSkillsByTags(List<Tag> tags) {
-    return skillRepository.findDistinctSkillsByTagsIn(tags);
-  }
-
+  
   @Override
   public void saveSkill(Skill skill) {
     skillRepository.save(skill);
