@@ -8,17 +8,15 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 @ControllerAdvice
 public class SkillGlobalExceptionHandler {
   @ExceptionHandler
-  public ResponseEntity<SkillIncorrectData> handleException(NoSuchSkillException exception) {
-    SkillIncorrectData incorrectData = new SkillIncorrectData();
-    incorrectData.setInfo(exception.getMessage());
+  public ResponseEntity<ErrorDto> handleException(NoSuchSkillException exception) {
+    ErrorDto incorrectData = new ErrorDto(exception.getMessage());
 
     return new ResponseEntity<>(incorrectData, HttpStatus.NOT_FOUND);
   }
 
   @ExceptionHandler
-  public ResponseEntity<SkillIncorrectData> handleException(Exception exception) {
-    SkillIncorrectData incorrectData = new SkillIncorrectData();
-    incorrectData.setInfo(exception.getMessage());
+  public ResponseEntity<ErrorDto> handleException(Exception exception) {
+    ErrorDto incorrectData = new ErrorDto(exception.getMessage());
 
     return new ResponseEntity<>(incorrectData, HttpStatus.BAD_REQUEST);
   }
