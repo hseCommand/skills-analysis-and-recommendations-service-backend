@@ -11,7 +11,7 @@ public interface SkillService {
   
   List<Skill> getAllSkills();
 
-  Skill saveSkill(Skill skill);
+  Skill updateSkill(Skill skill);
 
   Skill addSkill(Skill skill);
 

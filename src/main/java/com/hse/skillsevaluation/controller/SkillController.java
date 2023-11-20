@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 @RequestMapping("/skills")
 public class SkillController {
+
   private final SkillService skillService;
 
   private final SkillMapper skillMapper;
@@ -55,14 +56,14 @@ public class SkillController {
   @PostMapping
   public SkillDto addSkill(@RequestBody @Valid SkillCreateDto skillCreateDto) {
     Skill skill = skillMapper.skillCreateDtoToSkill(skillCreateDto);
-    Skill savedSkill = skillService.saveSkill(skill);
+    Skill savedSkill = skillService.addSkill(skill);
     return skillMapper.skillToSkillDto(savedSkill);
   }
 
   @PutMapping
   public SkillDto updateSkill(@RequestBody @Valid SkillDto skillDto) {
     Skill skill = skillMapper.skillDtoToSkill(skillDto);
-    Skill updatedSkill = skillService.saveSkill(skill);
+    Skill updatedSkill = skillService.updateSkill(skill);
     return skillMapper.skillToSkillDto(updatedSkill);
   }
 
