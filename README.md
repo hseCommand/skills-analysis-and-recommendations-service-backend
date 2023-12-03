@@ -1,17 +1,19 @@
-## Docker Hub
+## Запуск сервера через Docker
 
-Этот проект также доступен на Docker Hub и может быть загружен в виде Docker-образа с использованием следующей команды:
+Для запуска сервера вам не нужно компилировать код. Вы можете использовать предварительно собранные образы, доступные на
+Docker Hub:
 
-```sh
-docker pull danchuo/skills-evaluation
+1. Скачайте файл `docker-compose-images.yml` из репозитория.
+2. Переименуйте файл в `docker-compose.yml`.
+3. Откройте терминал в директории, где расположен файл, и выполните команду:
+
+```sh 
+ docker-compose up 
 ```
-
-Список версий можно найти здесь:
-[https://hub.docker.com/repository/docker/danchuo/skills-evaluation/general](https://hub.docker.com/repository/docker/danchuo/skills-evaluation/general)
 
 ## Доступ к Swagger UI
 
-Можно получить доступ к документации API проекта, используя Swagger UI. Запустите проект и перейдите по
+Можно получить доступ к документации API проекта навыков напрямую, используя Swagger UI. Запустите проект и перейдите по
 следующему адресу в вашем веб-браузере:
 
 [http://localhost:8081/swagger-ui.html](http://localhost:8081/swagger-ui.html)
