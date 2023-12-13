@@ -17,3 +17,10 @@ Docker Hub:
 следующему адресу в вашем веб-браузере:
 
 [http://localhost:8081/swagger-ui.html](http://localhost:8081/swagger-ui.html)
+
+## Доступ к Swagger UI для сервиса авторизации
+
+Можно получить доступ к документации API сервиса авторизации напрямую, используя Swagger UI. Запустите проект и перейдите по
+следующему адресу в вашем веб-браузере:
+
+[http://localhost:8082/swagger-ui/index.html](http://localhost:8082/swagger-ui/index.html)

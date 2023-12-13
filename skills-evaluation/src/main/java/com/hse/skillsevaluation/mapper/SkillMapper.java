@@ -12,7 +12,5 @@ public interface SkillMapper {
 
   Skill skillDtoToSkill(SkillDto skillDto);
 
-  SkillCreateDto skillToSkillCreateDto(Skill skill);
-
   Skill skillCreateDtoToSkill(SkillCreateDto skillCreateDto);
 }
