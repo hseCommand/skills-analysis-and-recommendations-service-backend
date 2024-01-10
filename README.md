@@ -13,7 +13,9 @@ Docker Hub:
 
 ## Доступ к Swagger UI
 
-Можно получить доступ к документации API проекта навыков напрямую, используя Swagger UI. Запустите проект и перейдите по
+Можно получить доступ к документации API сервисов, используя Swagger UI. Запустите проект и перейдите по
 следующему адресу в вашем веб-браузере:
 
-[http://localhost:8081/swagger-ui.html](http://localhost:8081/swagger-ui.html)
+[http://localhost:8080/swagger-ui.html](http://localhost:8082/swagger-ui/index.html)
+
+Выбирайте интересующий вас сервис в выпадающем списке справа.

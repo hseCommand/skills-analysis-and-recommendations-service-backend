@@ -2,7 +2,7 @@ package com.hse.skillsevaluation.service;
 
 import com.hse.skillsevaluation.entity.Skill;
 import com.hse.skillsevaluation.exception_handling.NoSuchSkillException;
-import com.hse.skillsevaluation.repositry.SkillRepository;
+import com.hse.skillsevaluation.repository.SkillRepository;
 
 import java.util.List;
 

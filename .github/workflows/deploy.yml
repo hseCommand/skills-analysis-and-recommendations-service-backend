@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        service: [api-gateway, discovery-server, skills-evaluation]
+        service: [api-gateway, discovery-server, skills-evaluation, auth-service]
     steps:
       - uses: actions/checkout@v4
       - name: Set up JDK
