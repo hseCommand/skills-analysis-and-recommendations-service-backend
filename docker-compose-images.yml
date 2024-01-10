@@ -43,10 +43,20 @@ services:
 
   postgres-skills:
     image: postgres:latest
-    container_name: skill-evaluations-postgres
+    container_name: postgres-skills
     environment:
-      - POSTGRES_DB=hse_db
+      - POSTGRES_DB=skills
       - POSTGRES_USER=hse
       - POSTGRES_PASSWORD=hsepassword
     ports:
       - "5432:5432"
+
+  postgres-users:
+    image: 'postgres:latest'
+    container_name: postgres-users
+    environment:
+      - POSTGRES_DB=users
+      - POSTGRES_USER=hse
+      - POSTGRES_PASSWORD=hsepassword
+    ports:
+      - "5433:5432"
