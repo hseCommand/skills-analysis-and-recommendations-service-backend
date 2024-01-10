@@ -16,6 +16,6 @@ Docker Hub:
 Можно получить доступ к документации API сервисов, используя Swagger UI. Запустите проект и перейдите по
 следующему адресу в вашем веб-браузере:
 
-[http://localhost:8080/swagger-ui.html](http://localhost:8082/swagger-ui/index.html)
+[http://localhost:8080/swagger-ui.html](http://localhost:8080/swagger-ui.html)
 
 Выбирайте интересующий вас сервис в выпадающем списке справа.

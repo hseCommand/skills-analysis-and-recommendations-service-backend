@@ -27,7 +27,7 @@ services:
     depends_on:
       - discovery-server
       - api-gateway
-      - postgres-skills
+      - postgres-users
 
   skills-evaluation:
     build: ./skills-evaluation
