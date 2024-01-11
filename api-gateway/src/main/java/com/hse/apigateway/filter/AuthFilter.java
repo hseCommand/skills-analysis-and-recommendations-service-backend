@@ -1,7 +1,6 @@
 package com.hse.apigateway.filter;
 
 import com.hse.apigateway.util.JwtUtil;
-import lombok.RequiredArgsConstructor;
 import org.apache.http.HttpHeaders;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.gateway.filter.GatewayFilter;
@@ -27,7 +26,7 @@ public class AuthFilter extends AbstractGatewayFilterFactory<AuthFilter.Config> 
 
   @Override
   public GatewayFilter apply(Config config) {
-    return (((exchange, chain) -> {
+    return (exchange, chain) -> {
       if (routeValidator.isSecured.test(exchange.getRequest())) {
         if (!exchange.getRequest().getHeaders().containsKey(HttpHeaders.AUTHORIZATION)) {
           throw new RuntimeException("Missing authorization header");
@@ -43,7 +42,7 @@ public class AuthFilter extends AbstractGatewayFilterFactory<AuthFilter.Config> 
         }
       }
       return chain.filter(exchange);
-    }));
+    };
   }
 
   public static class Config {

@@ -41,6 +41,18 @@ services:
       - api-gateway
       - postgres-skills
 
+  profile-service:
+    build: ./profile-service
+    container_name: profile-service-app
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+    ports:
+      - "8083:8083"
+    depends_on:
+      - discovery-server
+      - api-gateway
+      - postgres-profiles
+
   postgres-skills:
     image: 'postgres:latest'
     container_name: postgres-skills
@@ -60,3 +72,13 @@ services:
       - POSTGRES_PASSWORD=hsepassword
     ports:
       - "5433:5432"
+
+  postgres-profiles:
+    image: 'postgres:latest'
+    container_name: postgres-profiles
+    environment:
+      - POSTGRES_DB=profiles
+      - POSTGRES_USER=hse
+      - POSTGRES_PASSWORD=hsepassword
+    ports:
+      - "5434:5432"
