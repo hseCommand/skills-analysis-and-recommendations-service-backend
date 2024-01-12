@@ -6,6 +6,5 @@ import lombok.Data;
 public class SkillGradeDto {
   private int gradeNumber;
   private String requirements;
-  private String artifact;
   private String recommendation;
 }

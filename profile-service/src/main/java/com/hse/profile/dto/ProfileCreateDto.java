@@ -1,15 +1,21 @@
 package com.hse.profile.dto;
 
 import com.hse.profile.entity.ProfileStatus;
-import lombok.Data;
-
+import com.hse.profile.entity.SkillType;
+import com.hse.profile.entity.UnitType;
 import java.util.List;
+import lombok.Data;
 
 @Data
 public class ProfileCreateDto {
 
   private ProfileStatus status;
 
+  private SkillType skillType;
+
+  private UnitType unitType;
+
   private int skillGrade;
-  private List<Long> skills;
+
+  private List<SkillInfoDto> skills;
 }
