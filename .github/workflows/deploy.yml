@@ -2,7 +2,7 @@ name: Deploy to docker hub
 
 on:
   pull_request:
-    types: [closed]
+    types: [ closed ]
 
 jobs:
   build_and_push:
@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        service: [api-gateway, discovery-server, skills-evaluation, auth-service]
+        service: [ api-gateway, discovery-server, skills-evaluation, auth-service, profile-service ]
     steps:
       - uses: actions/checkout@v4
       - name: Set up JDK
