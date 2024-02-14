@@ -1,8 +1,11 @@
 package com.hse.authservice.util;
 
+import com.hse.authservice.entity.Role;
 import com.hse.authservice.entity.UserCredential;
 import java.util.Collection;
+import java.util.List;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.UserDetails;
 
 public class CustomUserDetails implements UserDetails {
@@ -10,14 +13,18 @@ public class CustomUserDetails implements UserDetails {
   private String name;
   private String password;
 
+  private List<Role> roles;
+
   public CustomUserDetails(UserCredential userCredential) {
     this.name = userCredential.getName();
     this.password = userCredential.getPassword();
+    this.roles = userCredential.getRoles();
   }
 
   @Override
   public Collection<? extends GrantedAuthority> getAuthorities() {
-    return null;
+    String[] userRoles = roles.stream().map(Enum::name).toArray(String[]::new);
+    return AuthorityUtils.createAuthorityList(userRoles);
   }
 
   @Override

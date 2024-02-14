@@ -11,6 +11,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
+import jakarta.validation.constraints.NotNull;
 import java.time.Instant;
 import java.util.List;
 import java.util.UUID;
@@ -25,6 +26,9 @@ public class Profile {
   @Id
   @GeneratedValue(strategy = GenerationType.UUID)
   private UUID id;
+
+  @NotNull
+  private Long userId;
 
   @CreationTimestamp
   @Temporal(TemporalType.TIMESTAMP)
