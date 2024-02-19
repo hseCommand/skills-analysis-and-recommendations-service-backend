@@ -2,8 +2,13 @@ package com.hse.authservice.controller;
 
 import com.hse.authservice.dto.UserCredentialAuthRequest;
 import com.hse.authservice.dto.UserCredentialRegisterRequest;
+import com.hse.authservice.entity.Role;
+import com.hse.authservice.entity.UserCredential;
 import com.hse.authservice.mapper.UserCredentialMapper;
 import com.hse.authservice.service.AuthService;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.annotation.Secured;
@@ -37,12 +42,14 @@ public class AuthController {
   @PostMapping("/register")
   @ResponseStatus(HttpStatus.CREATED)
   public void createUser(@RequestBody UserCredentialRegisterRequest credential) {
-    authService.saveUser(
-        userCredentialMapper.userCredentialRegisterRequestToUserCredential(credential));
+    UserCredential userCredential = userCredentialMapper.userCredentialRegisterRequestToUserCredential(credential);
+    userCredential.setRoles(List.of(Role.USER));
+    authService.saveUser(userCredential);
   }
 
   @PostMapping("/token")
   public String getToken(@RequestBody UserCredentialAuthRequest userCredentialAuthRequest) {
+    int[] a = new int[5];
     Authentication auth =
         authenticationManager.authenticate(
             new UsernamePasswordAuthenticationToken(
