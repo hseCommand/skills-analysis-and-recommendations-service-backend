@@ -45,7 +45,4 @@ public class ProfileServiceImpl implements ProfileService {
     profileRepository.deleteById(id);
   }
 
-  public void getProfileByUserId(Long id) {
-    profileRepository.
-  }
 }
