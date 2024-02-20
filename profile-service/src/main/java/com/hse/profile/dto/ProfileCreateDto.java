@@ -9,6 +9,8 @@ import lombok.Data;
 @Data
 public class ProfileCreateDto {
 
+  private Long userId;
+
   private ProfileStatus status;
 
   private SkillType skillType;

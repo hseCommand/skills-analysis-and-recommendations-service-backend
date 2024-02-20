@@ -5,21 +5,16 @@ import com.hse.skillsevaluation.dto.SkillDto;
 import com.hse.skillsevaluation.entity.Skill;
 import com.hse.skillsevaluation.mapper.SkillMapper;
 import com.hse.skillsevaluation.service.SkillService;
+import com.hse.skillsevaluation.util.JwtUtil;
 import jakarta.validation.Valid;
+import jakarta.ws.rs.NotAuthorizedException;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @CrossOrigin(origins = "*", allowedHeaders = "*")
@@ -31,6 +26,8 @@ public class SkillController {
 
   private final SkillMapper skillMapper;
 
+  private final JwtUtil jwtUtil;
+
   @GetMapping
   public List<SkillDto> getAllSkills() {
     List<Skill> skills = skillService.getAllSkills();
@@ -38,7 +35,10 @@ public class SkillController {
   }
 
   @PostMapping("/import")
-  public List<SkillDto> importSkills(@RequestBody @Valid List<SkillCreateDto> skillCreateDtos) {
+  public List<SkillDto> importSkills(@RequestBody @Valid List<SkillCreateDto> skillCreateDtos,
+      @RequestHeader(value = HttpHeaders.AUTHORIZATION) String token) {
+    validateTokenAndCheckAccessRights(token, "ADMIN");
+
     List<Skill> skillsToSave =
         skillCreateDtos.stream()
             .map(skillMapper::skillCreateDtoToSkill)
@@ -56,14 +56,20 @@ public class SkillController {
   }
 
   @PostMapping
-  public SkillDto addSkill(@RequestBody @Valid SkillCreateDto skillCreateDto) {
+  public SkillDto addSkill(@RequestBody @Valid SkillCreateDto skillCreateDto,
+      @RequestHeader(value = HttpHeaders.AUTHORIZATION) String token) {
+    validateTokenAndCheckAccessRights(token, "ADMIN");
+
     Skill skill = skillMapper.skillCreateDtoToSkill(skillCreateDto);
     Skill savedSkill = skillService.addSkill(skill);
     return skillMapper.skillToSkillDto(savedSkill);
   }
 
   @PutMapping
-  public SkillDto updateSkill(@RequestBody @Valid SkillDto skillDto) {
+  public SkillDto updateSkill(@RequestBody @Valid SkillDto skillDto,
+      @RequestHeader(value = HttpHeaders.AUTHORIZATION) String token) {
+    validateTokenAndCheckAccessRights(token, "ADMIN");
+
     Skill skill = skillMapper.skillDtoToSkill(skillDto);
     Skill updatedSkill = skillService.updateSkill(skill);
     return skillMapper.skillToSkillDto(updatedSkill);
@@ -71,7 +77,17 @@ public class SkillController {
 
   @DeleteMapping("/{id}")
   @ResponseStatus(HttpStatus.OK)
-  public void deleteSkillById(@PathVariable Long id) {
+  public void deleteSkillById(@PathVariable Long id,
+      @RequestHeader(value = HttpHeaders.AUTHORIZATION) String token) {
+    validateTokenAndCheckAccessRights(token, "ADMIN");
+
     skillService.deleteSkillById(id);
+  }
+
+  public void validateTokenAndCheckAccessRights(String token, String role) {
+    Map<String, Object> userInfo = jwtUtil.validateTokenAndExtractData(token);
+    if (!userInfo.get("roles").toString().contains(role)) {
+      throw new NotAuthorizedException("No access rights");
+    }
   }
 }

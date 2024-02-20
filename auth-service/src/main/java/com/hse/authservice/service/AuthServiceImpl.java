@@ -3,6 +3,7 @@ package com.hse.authservice.service;
 import com.hse.authservice.entity.UserCredential;
 import com.hse.authservice.repository.UserCredentialsRepository;
 import com.hse.authservice.util.JwtUtil;
+import jakarta.ws.rs.NotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -24,7 +25,8 @@ public class AuthServiceImpl implements AuthService {
 
   @Override
   public String generateToken(String userName) {
-    return jwtUtil.generateToken(userName);
+    return jwtUtil.generateToken(userCredentialsRepository.findByName(userName)
+        .orElseThrow(() -> new NotFoundException(userName)));
   }
 
   @Override

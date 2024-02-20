@@ -49,7 +49,6 @@ public class AuthController {
 
   @PostMapping("/token")
   public String getToken(@RequestBody UserCredentialAuthRequest userCredentialAuthRequest) {
-    int[] a = new int[5];
     Authentication auth =
         authenticationManager.authenticate(
             new UsernamePasswordAuthenticationToken(

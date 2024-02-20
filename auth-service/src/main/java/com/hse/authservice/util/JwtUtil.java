@@ -1,5 +1,6 @@
 package com.hse.authservice.util;
 
+import com.hse.authservice.entity.UserCredential;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.io.Decoders;
@@ -21,15 +22,17 @@ public class JwtUtil {
   }
 
 
-  public String generateToken(String userName) {
+  public String generateToken(UserCredential userCredential) {
     Map<String, Object> claims = new HashMap<>();
-    return createToken(claims, userName);
+    claims.put("id", userCredential.getId());
+    claims.put("name", userCredential.getName());
+    claims.put("roles", userCredential.getRoles());
+    return createToken(claims);
   }
 
-  private String createToken(Map<String, Object> claims, String userName) {
+  private String createToken(Map<String, Object> claims) {
     return Jwts.builder()
         .setClaims(claims)
-        .setSubject(userName)
         .setIssuedAt(new Date(System.currentTimeMillis()))
         .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 30))
         .signWith(getSignKey(), SignatureAlgorithm.HS256).compact();
