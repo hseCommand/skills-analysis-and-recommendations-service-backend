@@ -1,24 +1,29 @@
 package com.hse.profile.entity;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.validation.constraints.NotNull;
+import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
 
-@Entity
 @Getter
 @Setter
+@Entity
+@Table(name = "skill_info")
 public class SkillInfo {
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
   @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
-  @NotNull private Long skillId;
+  @Column(name = "skill_id", nullable = false)
+  private Long skillId;
 
+  @Column(name = "artifact")
   private String artifact;
 
+  @Column(name = "current_grade")
   private int currentGrade;
 }

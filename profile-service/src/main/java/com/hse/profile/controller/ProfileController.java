@@ -46,8 +46,8 @@ public class ProfileController {
   }
 
   @PutMapping
-  public ProfileDto updateProfile(@RequestBody ProfileDto profileDto,
-      @RequestHeader(value = HttpHeaders.AUTHORIZATION) String token) {
+  public ProfileDto updateProfile(
+      @RequestBody ProfileDto profileDto, @RequestHeader(HttpHeaders.AUTHORIZATION) String token) {
     Map<String, Object> userInfo = jwtUtil.validateTokenAndExtractData(token);
     Profile profile = profileMapper.profileDtoToProfile(profileDto);
 
@@ -69,8 +69,8 @@ public class ProfileController {
 
   @DeleteMapping("/{id}")
   @ResponseStatus(HttpStatus.OK)
-  public void deleteProfileById(@PathVariable UUID id,
-      @RequestHeader(value = HttpHeaders.AUTHORIZATION) String token) {
+  public void deleteProfileById(
+      @PathVariable UUID id, @RequestHeader(HttpHeaders.AUTHORIZATION) String token) {
     Map<String, Object> userInfo = jwtUtil.validateTokenAndExtractData(token);
     Profile profile = profileService.getProfileById(id);
 

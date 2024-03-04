@@ -6,12 +6,13 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
+import jakarta.persistence.Table;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
-import jakarta.validation.constraints.NotNull;
 import java.time.Instant;
 import java.util.List;
 import java.util.UUID;
@@ -22,34 +23,43 @@ import org.hibernate.annotations.CreationTimestamp;
 @Entity
 @Getter
 @Setter
+@Table(name = "profile")
 public class Profile {
-  @Id
-  @GeneratedValue(strategy = GenerationType.UUID)
-  private UUID id;
+  @Id @GeneratedValue private UUID id;
 
-  @NotNull
+  @Column(name = "user_id", nullable = false)
   private Long userId;
 
-  @CreationTimestamp
+  @Column(name = "created_at", updatable = false, nullable = false)
   @Temporal(TemporalType.TIMESTAMP)
-  @Column(updatable = false)
+  @CreationTimestamp
   private Instant createdAt;
 
+  @Column(name = "status", nullable = false, columnDefinition = "VARCHAR(20) DEFAULT 'NEW'")
   @Enumerated(EnumType.STRING)
-  @Column(columnDefinition = "VARCHAR(20) DEFAULT 'NEW'")
   private ProfileStatus status;
 
+  @Column(name = "skill_grade")
   private int skillGrade;
 
+  @Column(
+      name = "skill_type",
+      nullable = false,
+      columnDefinition = "VARCHAR(20) DEFAULT 'EMPLOYEE'")
   @Enumerated(EnumType.STRING)
-  @Column(columnDefinition = "VARCHAR(20) DEFAULT 'EMPLOYEE'")
   private SkillType skillType;
 
+  @Column(
+      name = "unit_type",
+      nullable = false,
+      columnDefinition = "VARCHAR(20) DEFAULT 'DEVELOPER'")
   @Enumerated(EnumType.STRING)
-  @Column(columnDefinition = "VARCHAR(20) DEFAULT 'DEVELOPER'")
   private UnitType unitType;
 
-  @ManyToMany(
-      cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
+  @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+  @JoinTable(
+      name = "profile_skills",
+      joinColumns = @JoinColumn(name = "profile_id"),
+      inverseJoinColumns = @JoinColumn(name = "skill_info_id"))
   private List<SkillInfo> skills;
 }

@@ -24,8 +24,13 @@ public class UserCredential {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
+  @Column(name = "name", nullable = false, unique = true)
   private String name;
+
+  @Column(name = "email", nullable = false, unique = true)
   private String email;
+
+  @Column(name = "password")
   private String password;
 
   @ElementCollection(targetClass = Role.class, fetch = FetchType.EAGER)
