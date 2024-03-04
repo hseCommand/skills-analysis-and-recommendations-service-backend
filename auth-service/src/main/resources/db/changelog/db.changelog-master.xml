@@ -4,5 +4,6 @@
                    https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
     <include file="001-create-user-credential-table.xml" relativeToChangelogFile="true"/>
     <include file="002-create-user-credential-role-table.xml" relativeToChangelogFile="true"/>
+    <include file="003-add-admin.xml" relativeToChangelogFile="true"/>
 
 </databaseChangeLog>
