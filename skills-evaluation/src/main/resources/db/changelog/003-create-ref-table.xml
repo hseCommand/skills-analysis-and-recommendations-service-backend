@@ -1,0 +1,46 @@
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                   https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+
+    <changeSet id="3" author="danchuo">
+        <createTable tableName="skill_grade">
+            <column name="id" type="BIGINT" autoIncrement="true" remarks="Primary key">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="grade_number" type="INT" remarks="Grade number">
+                <constraints nullable="false"/>
+            </column>
+            <column name="requirements" type="VARCHAR(500)" remarks="Requirements for the grade"/>
+            <column name="recommendation" type="VARCHAR(500)" remarks="Recommendations"/>
+            <column name="skill_id" type="BIGINT" remarks="Associated skill">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <addForeignKeyConstraint constraintName="fk_skill_grade_skill"
+                                 baseTableName="skill_grade"
+                                 baseColumnNames="skill_id"
+                                 referencedTableName="skill"
+                                 referencedColumnNames="id"/>
+
+        <createTable tableName="skill_tag">
+            <column name="skill_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="tag_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <addPrimaryKey columnNames="skill_id, tag_id" tableName="skill_tag" constraintName="pk_skill_tag"/>
+        <addForeignKeyConstraint constraintName="fk_skill_tag_skill"
+                                 baseTableName="skill_tag"
+                                 baseColumnNames="skill_id"
+                                 referencedTableName="skill"
+                                 referencedColumnNames="id"/>
+        <addForeignKeyConstraint constraintName="fk_skill_tag_tag"
+                                 baseTableName="skill_tag"
+                                 baseColumnNames="tag_id"
+                                 referencedTableName="tag"
+                                 referencedColumnNames="id"/>
+    </changeSet>
+</databaseChangeLog>
