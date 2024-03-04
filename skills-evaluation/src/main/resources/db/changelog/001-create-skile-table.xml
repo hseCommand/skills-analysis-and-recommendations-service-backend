@@ -1,0 +1,22 @@
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                   https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+
+    <changeSet id="1" author="danchuo">
+        <createTable tableName="skill">
+            <column name="id" type="BIGINT" autoIncrement="true" remarks="Primary key">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="name" type="VARCHAR(255)" remarks="Name of the skill">
+                <constraints nullable="false" unique="true"/>
+            </column>
+            <column name="skill_type" type="VARCHAR(255)" remarks="Type of the skill">
+                <constraints nullable="false"/>
+            </column>
+            <column name="unit_type" type="VARCHAR(255)" remarks="Unit type of the skill">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+</databaseChangeLog>

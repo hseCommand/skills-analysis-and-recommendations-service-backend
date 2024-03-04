@@ -10,5 +10,6 @@ public class SkillDto {
   private String skillType;
   private String unitType;
   private List<TagDto> tags;
-  private SkillDataDto skillData;
+  private String name;
+  private List<SkillGradeDto> skillGrades;
 }

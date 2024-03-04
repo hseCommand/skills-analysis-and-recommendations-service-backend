@@ -1,0 +1,23 @@
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                   https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+
+    <changeSet id="1" author="danchuo">
+        <createTable tableName="profile">
+            <column name="id" type="UUID">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="user_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created_at" type="TIMESTAMP">
+                <constraints nullable="false"/>
+            </column>
+            <column name="status" type="VARCHAR(20)" defaultValue="NEW"/>
+            <column name="skill_grade" type="INT"/>
+            <column name="skill_type" type="VARCHAR(20)" defaultValue="EMPLOYEE"/>
+            <column name="unit_type" type="VARCHAR(20)" defaultValue="DEVELOPER"/>
+        </createTable>
+    </changeSet>
+</databaseChangeLog>

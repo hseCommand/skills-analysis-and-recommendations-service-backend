@@ -28,7 +28,6 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@CrossOrigin(origins = "*", allowedHeaders = "*")
 @RequiredArgsConstructor
 @RequestMapping("/profiles")
 public class ProfileController {
@@ -47,8 +46,7 @@ public class ProfileController {
 
   @PutMapping
   public ProfileDto updateProfile(
-      @RequestBody ProfileDto profileDto,
-      @RequestHeader(value = HttpHeaders.AUTHORIZATION) String token) {
+      @RequestBody ProfileDto profileDto, @RequestHeader(HttpHeaders.AUTHORIZATION) String token) {
     Map<String, Object> userInfo = jwtUtil.validateTokenAndExtractData(token);
     Profile profile = profileMapper.profileDtoToProfile(profileDto);
 

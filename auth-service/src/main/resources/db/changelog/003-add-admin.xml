@@ -1,0 +1,54 @@
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                   https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+
+    <changeSet id="3" author="danchuo">
+        <insert tableName="user_credential">
+            <column name="name" value="admin"/>
+            <column name="email" value="admin@example.com"/>
+            <column name="password" value="$2a$10$ARpVoh7Y2./yHWq6FmZ3quDqQ.N0pAPm9aNiLOtHhWDLiTXfDZBYW"/>
+        </insert>
+        <insert tableName="user_credential">
+            <column name="name" value="approver"/>
+            <column name="email" value="approver@example.com"/>
+            <column name="password" value="$2a$10$3N2mdLLLMBCMCK1/GEeWSeWBAIW.XwkkkMProANDlho41xINjwDRS"/>
+        </insert>
+        <insert tableName="user_credential_role">
+            <column name="user_credential_id" valueNumeric="1"/>
+            <column name="role" value="USER"/>
+        </insert>
+        <insert tableName="user_credential_role">
+            <column name="user_credential_id" valueNumeric="1"/>
+            <column name="role" value="PRIMARY_USER"/>
+        </insert>
+        <insert tableName="user_credential_role">
+            <column name="user_credential_id" valueNumeric="1"/>
+            <column name="role" value="SUPERVISOR"/>
+        </insert>
+        <insert tableName="user_credential_role">
+            <column name="user_credential_id" valueNumeric="1"/>
+            <column name="role" value="APPROVER"/>
+        </insert>
+        <insert tableName="user_credential_role">
+            <column name="user_credential_id" valueNumeric="1"/>
+            <column name="role" value="ADMIN"/>
+        </insert>
+        <insert tableName="user_credential_role">
+            <column name="user_credential_id" valueNumeric="2"/>
+            <column name="role" value="USER"/>
+        </insert>
+        <insert tableName="user_credential_role">
+            <column name="user_credential_id" valueNumeric="2"/>
+            <column name="role" value="PRIMARY_USER"/>
+        </insert>
+        <insert tableName="user_credential_role">
+            <column name="user_credential_id" valueNumeric="2"/>
+            <column name="role" value="SUPERVISOR"/>
+        </insert>
+        <insert tableName="user_credential_role">
+            <column name="user_credential_id" valueNumeric="2"/>
+            <column name="role" value="APPROVER"/>
+        </insert>
+    </changeSet>
+</databaseChangeLog>

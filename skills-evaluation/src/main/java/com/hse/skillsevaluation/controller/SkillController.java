@@ -14,10 +14,18 @@ import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@CrossOrigin(origins = "*", allowedHeaders = "*")
 @RequiredArgsConstructor
 @RequestMapping("/skills")
 public class SkillController {
@@ -35,8 +43,9 @@ public class SkillController {
   }
 
   @PostMapping("/import")
-  public List<SkillDto> importSkills(@RequestBody @Valid List<SkillCreateDto> skillCreateDtos,
-      @RequestHeader(value = HttpHeaders.AUTHORIZATION) String token) {
+  public List<SkillDto> importSkills(
+      @RequestBody @Valid List<SkillCreateDto> skillCreateDtos,
+      @RequestHeader(HttpHeaders.AUTHORIZATION) String token) {
     validateTokenAndCheckAccessRights(token, "ADMIN");
 
     List<Skill> skillsToSave =
@@ -56,8 +65,9 @@ public class SkillController {
   }
 
   @PostMapping
-  public SkillDto addSkill(@RequestBody @Valid SkillCreateDto skillCreateDto,
-      @RequestHeader(value = HttpHeaders.AUTHORIZATION) String token) {
+  public SkillDto addSkill(
+      @RequestBody @Valid SkillCreateDto skillCreateDto,
+      @RequestHeader(HttpHeaders.AUTHORIZATION) String token) {
     validateTokenAndCheckAccessRights(token, "ADMIN");
 
     Skill skill = skillMapper.skillCreateDtoToSkill(skillCreateDto);
@@ -66,8 +76,9 @@ public class SkillController {
   }
 
   @PutMapping
-  public SkillDto updateSkill(@RequestBody @Valid SkillDto skillDto,
-      @RequestHeader(value = HttpHeaders.AUTHORIZATION) String token) {
+  public SkillDto updateSkill(
+      @RequestBody @Valid SkillDto skillDto,
+      @RequestHeader(HttpHeaders.AUTHORIZATION) String token) {
     validateTokenAndCheckAccessRights(token, "ADMIN");
 
     Skill skill = skillMapper.skillDtoToSkill(skillDto);
@@ -77,8 +88,8 @@ public class SkillController {
 
   @DeleteMapping("/{id}")
   @ResponseStatus(HttpStatus.OK)
-  public void deleteSkillById(@PathVariable Long id,
-      @RequestHeader(value = HttpHeaders.AUTHORIZATION) String token) {
+  public void deleteSkillById(
+      @PathVariable Long id, @RequestHeader(HttpHeaders.AUTHORIZATION) String token) {
     validateTokenAndCheckAccessRights(token, "ADMIN");
 
     skillService.deleteSkillById(id);
