@@ -1,9 +1,11 @@
 package com.hse.skillsevaluation.controller;
 
+import com.hse.skillsevaluation.dto.FilterDto;
 import com.hse.skillsevaluation.dto.SkillCreateDto;
 import com.hse.skillsevaluation.dto.SkillDto;
 import com.hse.skillsevaluation.entity.Skill;
 import com.hse.skillsevaluation.mapper.SkillMapper;
+import com.hse.skillsevaluation.service.Filter;
 import com.hse.skillsevaluation.service.SkillService;
 import com.hse.skillsevaluation.util.JwtUtil;
 import jakarta.validation.Valid;
@@ -62,6 +64,17 @@ public class SkillController {
   public SkillDto getSkillById(@PathVariable Long id) {
     Skill skill = skillService.getSkillById(id);
     return skillMapper.skillToSkillDto(skill);
+  }
+
+  @PostMapping("/filter")
+  public List<SkillDto> getAllSkillsByFilter(
+      @RequestBody @Valid FilterDto filterDto,
+      @RequestHeader(HttpHeaders.AUTHORIZATION) String token
+  ) {
+    Filter filter = skillMapper.FilterDtoToFilter(filterDto);
+    List<Skill> skills = skillService.getAllSkillsByFilter(filter);
+
+    return skills.stream().map(skillMapper::skillToSkillDto).collect(Collectors.toList());
   }
 
   @PostMapping

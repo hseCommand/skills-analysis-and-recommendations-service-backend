@@ -1,10 +1,12 @@
 package com.hse.skillsevaluation.mapper;
 
+import com.hse.skillsevaluation.dto.FilterDto;
 import com.hse.skillsevaluation.dto.SkillCreateDto;
 import com.hse.skillsevaluation.dto.SkillDto;
 import com.hse.skillsevaluation.dto.SkillGradeDto;
 import com.hse.skillsevaluation.entity.Skill;
 import com.hse.skillsevaluation.entity.SkillGrade;
+import com.hse.skillsevaluation.service.Filter;
 import org.mapstruct.AfterMapping;
 import org.mapstruct.Mapper;
 import org.mapstruct.MappingTarget;
@@ -17,6 +19,8 @@ public interface SkillMapper {
   Skill skillDtoToSkill(SkillDto skillDto);
 
   Skill skillCreateDtoToSkill(SkillCreateDto skillCreateDto);
+
+  Filter FilterDtoToFilter(FilterDto filterDto);
 
   SkillGrade convertToSkillGrade(SkillGradeDto skillGradeDto);
 

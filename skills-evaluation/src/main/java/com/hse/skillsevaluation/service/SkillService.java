@@ -1,5 +1,6 @@
 package com.hse.skillsevaluation.service;
 
+import com.hse.skillsevaluation.dto.FilterDto;
 import com.hse.skillsevaluation.entity.Skill;
 import java.util.List;
 
@@ -10,6 +11,8 @@ public interface SkillService {
   Skill getSkillById(Long id);
   
   List<Skill> getAllSkills();
+
+  List<Skill> getAllSkillsByFilter(Filter filter);
 
   Skill updateSkill(Skill skill);
 
