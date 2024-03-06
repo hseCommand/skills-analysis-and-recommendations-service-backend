@@ -3,10 +3,13 @@ name: Deploy to docker hub
 on:
   pull_request:
     types: [ closed ]
+  workflow_dispatch:
 
 jobs:
   build_and_push:
-    if: github.event_name == 'pull_request' && github.event.action == 'closed' && github.event.pull_request.merged == true
+    if: >
+      (github.event_name == 'pull_request' && github.event.action == 'closed' && github.event.pull_request.merged == true) || 
+      github.event_name == 'workflow_dispatch'
     runs-on: ubuntu-latest
     strategy:
       matrix:
