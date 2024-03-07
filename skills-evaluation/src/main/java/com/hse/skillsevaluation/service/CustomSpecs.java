@@ -4,6 +4,7 @@ import com.hse.skillsevaluation.entity.Skill;
 import com.hse.skillsevaluation.entity.SkillType;
 import com.hse.skillsevaluation.entity.Tag;
 import com.hse.skillsevaluation.entity.UnitType;
+import jakarta.persistence.criteria.Join;
 import jakarta.persistence.criteria.Path;
 import java.util.List;
 import org.springframework.data.jpa.domain.Specification;
@@ -31,13 +32,13 @@ public class CustomSpecs {
     };
   }
 
-  static Specification<Skill> byTags(List<Tag> tags) {
+  static Specification<Skill> byTags(List<String> tags) {
     return (root, query, builder) -> {
-      if (tags == null) {
+      if (tags == null || tags.isEmpty()) {
         return builder.isTrue(builder.literal(true));
       } else {
-        Path<Tag> group = root.get("tags");
-        return group.in(tags);
+        Join<Skill, Tag> join = root.join("tags");
+        return join.get("tag").in(tags);
       }
     };
   }

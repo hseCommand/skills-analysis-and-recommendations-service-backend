@@ -1,0 +1,87 @@
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                   https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+
+    <changeSet id="4" author="danchuo">
+        <insert tableName="skill">
+            <column name="name" value="Java программирование"/>
+            <column name="skill_type" value="EMPLOYEE"/>
+            <column name="unit_type" value="DEVELOPER"/>
+        </insert>
+        <insert tableName="tag">
+            <column name="tag" value="Java"/>
+        </insert>
+        <insert tableName="tag">
+            <column name="tag" value="Программирование"/>
+        </insert>
+        <insert tableName="skill_grade">
+            <column name="grade_number" value="1"/>
+            <column name="requirements" value="Базовые знания языка программирования Java"/>
+            <column name="recommendation" value="Настоятельно рекомендуется для начинающих"/>
+            <column name="skill_id" value="1"/>
+        </insert>
+        <insert tableName="skill_grade">
+            <column name="grade_number" value="2"/>
+            <column name="requirements" value="Продвинутые знания языка программирования Java"/>
+            <column name="recommendation" value="Рекомендуется для разработчиков с опытом"/>
+            <column name="skill_id" value="1"/>
+        </insert>
+        <insert tableName="skill_tag">
+            <column name="skill_id" value="1"/>
+            <column name="tag_id" value="1"/>
+        </insert>
+        <insert tableName="skill_tag">
+            <column name="skill_id" value="1"/>
+            <column name="tag_id" value="2"/>
+        </insert>
+        <insert tableName="skill">
+            <column name="name" value="Управление базами данных"/>
+            <column name="skill_type" value="EMPLOYEE"/>
+            <column name="unit_type" value="DEVELOPER"/>
+        </insert>
+        <insert tableName="tag">
+            <column name="tag" value="Базы данных"/>
+        </insert>
+        <insert tableName="skill_grade">
+            <column name="grade_number" value="1"/>
+            <column name="requirements" value="Базовые знания управления базами данных"/>
+            <column name="recommendation" value="Настоятельно рекомендуется для начинающих"/>
+            <column name="skill_id" value="2"/>
+        </insert>
+        <insert tableName="skill_grade">
+            <column name="grade_number" value="2"/>
+            <column name="requirements" value="Продвинутые знания управления базами данных"/>
+            <column name="recommendation" value="Рекомендуется для разработчиков с опытом"/>
+            <column name="skill_id" value="2"/>
+        </insert>
+        <insert tableName="skill_tag">
+            <column name="skill_id" value="2"/>
+            <column name="tag_id" value="3"/>
+        </insert>
+        <insert tableName="skill">
+            <column name="name" value="Управление проектами"/>
+            <column name="skill_type" value="EMPLOYEE"/>
+            <column name="unit_type" value="ANALYST"/>
+        </insert>
+        <insert tableName="tag">
+            <column name="tag" value="Управление проектами"/>
+        </insert>
+        <insert tableName="skill_grade">
+            <column name="grade_number" value="1"/>
+            <column name="requirements" value="Базовые знания принципов управления проектами"/>
+            <column name="recommendation" value="Настоятельно рекомендуется для начинающих"/>
+            <column name="skill_id" value="3"/>
+        </insert>
+        <insert tableName="skill_grade">
+            <column name="grade_number" value="2"/>
+            <column name="requirements" value="Продвинутые знания принципов управления проектами"/>
+            <column name="recommendation" value="Рекомендуется для менеджеров проектов с опытом"/>
+            <column name="skill_id" value="3"/>
+        </insert>
+        <insert tableName="skill_tag">
+            <column name="skill_id" value="3"/>
+            <column name="tag_id" value="4"/>
+        </insert>
+    </changeSet>
+</databaseChangeLog>

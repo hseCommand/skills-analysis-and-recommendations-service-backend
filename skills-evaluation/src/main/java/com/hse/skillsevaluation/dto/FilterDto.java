@@ -7,5 +7,5 @@ import lombok.Data;
 public class FilterDto {
   private List<String> skillTypes;
   private List<String> unitTypes;
-  private List<TagDto> tags;
+  private List<String> tags;
 }

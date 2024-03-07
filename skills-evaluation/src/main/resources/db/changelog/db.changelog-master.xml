@@ -5,5 +5,6 @@
     <include file="001-create-skile-table.xml" relativeToChangelogFile="true"/>
     <include file="002-create-tag-table.xml" relativeToChangelogFile="true"/>
     <include file="003-create-ref-table.xml" relativeToChangelogFile="true"/>
+    <include file="004-add-skills.xml" relativeToChangelogFile="true"/>
 
 </databaseChangeLog>

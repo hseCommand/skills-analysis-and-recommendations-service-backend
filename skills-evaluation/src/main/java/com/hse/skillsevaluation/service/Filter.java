@@ -12,5 +12,5 @@ import lombok.Setter;
 public class Filter {
   private List<SkillType> skillTypes;
   private List<UnitType> unitTypes;
-  private List<Tag> tags;
+  private List<String> tags;
 }
