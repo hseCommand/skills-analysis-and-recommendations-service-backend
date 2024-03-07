@@ -71,7 +71,7 @@ public class SkillController {
       @RequestBody @Valid FilterDto filterDto,
       @RequestHeader(HttpHeaders.AUTHORIZATION) String token
   ) {
-    Filter filter = skillMapper.FilterDtoToFilter(filterDto);
+    Filter filter = skillMapper.filterDtoToFilter(filterDto);
     List<Skill> skills = skillService.getAllSkillsByFilter(filter);
 
     return skills.stream().map(skillMapper::skillToSkillDto).collect(Collectors.toList());

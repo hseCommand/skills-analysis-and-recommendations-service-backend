@@ -1,7 +1,6 @@
 package com.hse.skillsevaluation.service;
 
 import com.hse.skillsevaluation.entity.SkillType;
-import com.hse.skillsevaluation.entity.Tag;
 import com.hse.skillsevaluation.entity.UnitType;
 import java.util.List;
 import lombok.Getter;

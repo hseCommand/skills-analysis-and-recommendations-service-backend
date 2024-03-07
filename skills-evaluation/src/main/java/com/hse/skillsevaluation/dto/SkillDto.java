@@ -9,7 +9,7 @@ public class SkillDto {
   @NotNull private Long id;
   private String skillType;
   private String unitType;
-  private List<TagDto> tags;
+  private List<String> tags;
   private String name;
   private List<SkillGradeDto> skillGrades;
 }
