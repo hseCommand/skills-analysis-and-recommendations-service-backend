@@ -64,6 +64,6 @@ public class Profile {
       inverseJoinColumns = @JoinColumn(name = "skill_info_id"))
   private List<SkillInfo> skills;
 
-  @OneToMany(mappedBy = "profile", cascade = CascadeType.ALL, orphanRemoval = true)
+  @OneToMany(mappedBy = "profile")
   private List<Review> reviews;
 }

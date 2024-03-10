@@ -95,6 +95,9 @@ public class SkillController {
     validateTokenAndCheckAccessRights(token, "ADMIN");
 
     Skill skill = skillMapper.skillDtoToSkill(skillDto);
+    skill.setSkillGrades(skill.getSkillGrades().stream()
+        .peek(skillGrade -> skillGrade.setSkill(skill))
+        .collect(Collectors.toList()));
     Skill updatedSkill = skillService.updateSkill(skill);
     return skillMapper.skillToSkillDto(updatedSkill);
   }

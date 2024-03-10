@@ -47,6 +47,8 @@ public class ProfileController {
       @RequestBody ProfileDto profileDto, @RequestHeader(HttpHeaders.AUTHORIZATION) String token) {
     Map<String, Object> userInfo = jwtUtil.validateTokenAndExtractData(token);
     Profile profile = profileMapper.profileDtoToProfile(profileDto);
+    Profile profileFromBase = profileService.getProfileById(profile.getId());
+    profile.setUserId(profileFromBase.getUserId());
 
     if (profile.getUserId() != Long.parseLong(userInfo.get("id").toString())) {
       throw new NotAuthorizedException("No access rights");
