@@ -4,6 +4,9 @@ import com.hse.skillsevaluation.dto.FilterDto;
 import com.hse.skillsevaluation.dto.SkillCreateDto;
 import com.hse.skillsevaluation.dto.SkillDto;
 import com.hse.skillsevaluation.entity.Skill;
+import com.hse.skillsevaluation.entity.SkillType;
+import com.hse.skillsevaluation.entity.Tag;
+import com.hse.skillsevaluation.entity.UnitType;
 import com.hse.skillsevaluation.mapper.SkillMapper;
 import com.hse.skillsevaluation.service.Filter;
 import com.hse.skillsevaluation.service.SkillService;
@@ -109,6 +112,24 @@ public class SkillController {
     validateTokenAndCheckAccessRights(token, "ADMIN");
 
     skillService.deleteSkillById(id);
+  }
+
+  @GetMapping("/tags/all")
+  @ResponseStatus(HttpStatus.OK)
+  public List<String> getAllTags() {
+    return skillService.getAllDistinctTags();
+  }
+
+  @GetMapping("/skillTypes/all")
+  @ResponseStatus(HttpStatus.OK)
+  public SkillType[] getAllSkillTypes() {
+    return SkillType.values();
+  }
+
+  @GetMapping("/unitTypes/all")
+  @ResponseStatus(HttpStatus.OK)
+  public UnitType[] getAllUnitTypes() {
+    return UnitType.values();
   }
 
   public void validateTokenAndCheckAccessRights(String token, String role) {

@@ -2,6 +2,7 @@ package com.hse.skillsevaluation.service;
 
 import com.hse.skillsevaluation.dto.FilterDto;
 import com.hse.skillsevaluation.entity.Skill;
+import com.hse.skillsevaluation.entity.Tag;
 import com.hse.skillsevaluation.exception_handling.NoSuchSkillException;
 import com.hse.skillsevaluation.repository.SkillRepository;
 
@@ -66,5 +67,10 @@ public class SkillServiceImpl implements SkillService {
     } else {
       throw new NoSuchSkillException();
     }
+  }
+
+  @Override
+  public List<String> getAllDistinctTags() {
+    return skillRepository.getAllDistinctTags();
   }
 }
