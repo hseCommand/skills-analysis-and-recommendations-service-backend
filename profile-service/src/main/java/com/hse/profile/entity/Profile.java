@@ -10,6 +10,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
@@ -39,8 +40,8 @@ public class Profile {
   @Enumerated(EnumType.STRING)
   private ProfileStatus status;
 
-  @Column(name = "skill_grade")
-  private int skillGrade;
+  @Column(name = "target_grade_by_default")
+  private int targetGradeByDefault;
 
   @Column(
       name = "skill_type",
@@ -62,4 +63,7 @@ public class Profile {
       joinColumns = @JoinColumn(name = "profile_id"),
       inverseJoinColumns = @JoinColumn(name = "skill_info_id"))
   private List<SkillInfo> skills;
+
+  @OneToMany(mappedBy = "profile", cascade = CascadeType.ALL, orphanRemoval = true)
+  private List<Review> reviews;
 }

@@ -13,13 +13,13 @@ public class ProfileDto {
 
   private String createdAt;
 
-  private ProfileStatus status;
+  private String status;
 
-  private SkillType skillType;
+  private String skillType;
 
-  private UnitType unitType;
+  private String unitType;
 
-  private int skillGrade;
+  private int targetGradeByDefault;
 
   private List<SkillInfoDto> skills;
 }

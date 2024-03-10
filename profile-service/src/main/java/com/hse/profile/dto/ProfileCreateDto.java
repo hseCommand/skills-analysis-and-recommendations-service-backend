@@ -8,16 +8,13 @@ import lombok.Data;
 
 @Data
 public class ProfileCreateDto {
+  private String status;
 
-  private Long userId;
+  private String skillType;
 
-  private ProfileStatus status;
+  private String unitType;
 
-  private SkillType skillType;
-
-  private UnitType unitType;
-
-  private int skillGrade;
+  private int targetGradeByDefault;
 
   private List<SkillInfoDto> skills;
 }

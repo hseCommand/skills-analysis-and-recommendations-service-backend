@@ -4,7 +4,9 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
+import jakarta.ws.rs.NotAuthorizedException;
 import java.security.Key;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import org.springframework.stereotype.Component;
@@ -28,5 +30,13 @@ public class JwtUtil {
   private Key getSignKey() {
     byte[] keyBytes = Decoders.BASE64.decode(SECRET);
     return Keys.hmacShaKeyFor(keyBytes);
+  }
+
+  public void validateTokenAndCheckAccessRights(String token, String... roles) {
+    Map<String, Object> userInfo = validateTokenAndExtractData(token);
+    String rolesStr = userInfo.get("roles").toString();
+    if (Arrays.stream(roles).noneMatch(rolesStr::contains)) {
+      throw new NotAuthorizedException("No access rights");
+    }
   }
 }

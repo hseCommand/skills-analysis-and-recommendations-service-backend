@@ -24,6 +24,6 @@ public class SkillInfo {
   @Column(name = "artifact")
   private String artifact;
 
-  @Column(name = "current_grade")
-  private int currentGrade;
+  @Column(name = "target_grade")
+  private int targetGrade;
 }

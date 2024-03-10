@@ -17,4 +17,6 @@ public interface ProfileService {
   List<Profile> getAllProfiles();
 
   void deleteProfileById(UUID id);
+
+  void deleteProfilesByFilter(ProfilesFilter profilesFilter);
 }

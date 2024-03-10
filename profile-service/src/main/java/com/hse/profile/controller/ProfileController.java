@@ -2,12 +2,13 @@ package com.hse.profile.controller;
 
 import com.hse.profile.dto.ProfileCreateDto;
 import com.hse.profile.dto.ProfileDto;
+import com.hse.profile.dto.SkillInfoDto;
 import com.hse.profile.entity.Profile;
+import com.hse.profile.entity.SkillInfo;
 import com.hse.profile.mapper.ProfileMapper;
 import com.hse.profile.service.ProfileService;
 import com.hse.profile.util.JwtUtil;
 import jakarta.ws.rs.NotAuthorizedException;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
@@ -15,16 +16,7 @@ import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestHeader;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
@@ -38,9 +30,16 @@ public class ProfileController {
   private final JwtUtil jwtUtil;
 
   @PostMapping
-  public ProfileDto createProfile(@RequestBody ProfileCreateDto profileCreateDto) {
-    Profile profile = profileMapper.profileCreateDtotoProfile(profileCreateDto);
-    return profileMapper.profiletoProfileDto(profileService.addProfile(profile));
+  public ProfileDto createProfile(
+      @RequestBody ProfileCreateDto profileCreateDto,
+      @RequestHeader(HttpHeaders.AUTHORIZATION) String token) {
+    Map<String, Object> userInfo = jwtUtil.validateTokenAndExtractData(token);
+    Long userId = Long.parseLong(userInfo.get("id").toString());
+
+    Profile profile = profileMapper.profileCreateDtoToProfile(profileCreateDto);
+    profile.setUserId(userId);
+
+    return profileMapper.profileToProfileDto(profileService.addProfile(profile));
   }
 
   @PutMapping
@@ -53,16 +52,16 @@ public class ProfileController {
       throw new NotAuthorizedException("No access rights");
     }
 
-    return profileMapper.profiletoProfileDto(profileService.updateProfile(profile));
+    return profileMapper.profileToProfileDto(profileService.updateProfile(profile));
   }
 
   @GetMapping("/all")
   public List<ProfileDto> getAllProfiles(
       @RequestHeader(value = HttpHeaders.AUTHORIZATION) String token) {
-    validateTokenAndCheckAccessRights(token, "ADMIN", "SUPERVISOR");
+    jwtUtil.validateTokenAndCheckAccessRights(token, "ADMIN", "SUPERVISOR");
 
     var profiles = profileService.getAllProfiles();
-    return profiles.stream().map(profileMapper::profiletoProfileDto).collect(Collectors.toList());
+    return profiles.stream().map(profileMapper::profileToProfileDto).collect(Collectors.toList());
   }
 
   @DeleteMapping("/{id}")
@@ -81,13 +80,23 @@ public class ProfileController {
 
   @GetMapping("/{id}")
   public ProfileDto getProfileById(@PathVariable UUID id) {
-    return profileMapper.profiletoProfileDto(profileService.getProfileById(id));
+    return profileMapper.profileToProfileDto(profileService.getProfileById(id));
   }
 
-  public void validateTokenAndCheckAccessRights(String token, String... roles) {
+  @PostMapping("/addSkill/{profile_id}")
+  public SkillInfoDto addSkillToProfileById(
+      @PathVariable UUID profile_id,
+      @RequestBody SkillInfoDto skillInfoDto,
+      @RequestHeader(HttpHeaders.AUTHORIZATION) String token) {
     Map<String, Object> userInfo = jwtUtil.validateTokenAndExtractData(token);
-    String rolesStr = userInfo.get("roles").toString();
-    if (Arrays.stream(roles).noneMatch(rolesStr::contains)) {
+    Profile profile = profileService.getProfileById(profile_id);
+
+    if (profile.getUserId() == Long.parseLong(userInfo.get("id").toString())) {
+      SkillInfo skillInfo = profileMapper.skillInfoDtoToSkillInfo(skillInfoDto);
+      profile.getSkills().add(skillInfo);
+      profileService.updateProfile(profile);
+      return profileMapper.skillInfoToSkillInfoDto(skillInfo);
+    } else {
       throw new NotAuthorizedException("No access rights");
     }
   }

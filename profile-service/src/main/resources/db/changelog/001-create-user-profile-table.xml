@@ -15,7 +15,7 @@
                 <constraints nullable="false"/>
             </column>
             <column name="status" type="VARCHAR(20)" defaultValue="NEW"/>
-            <column name="skill_grade" type="INT"/>
+            <column name="target_grade_by_default" type="INT"/>
             <column name="skill_type" type="VARCHAR(20)" defaultValue="EMPLOYEE"/>
             <column name="unit_type" type="VARCHAR(20)" defaultValue="DEVELOPER"/>
         </createTable>

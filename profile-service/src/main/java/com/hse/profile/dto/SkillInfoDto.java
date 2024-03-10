@@ -9,5 +9,5 @@ public class SkillInfoDto {
 
   private String artifact;
 
-  private int currentGrade;
+  private int targetGrade;
 }

@@ -5,6 +5,7 @@ import com.hse.profile.exception.NoSuchProfileException;
 import com.hse.profile.repository.ProfileRepository;
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -19,6 +20,15 @@ public class ProfileServiceImpl implements ProfileService {
     var profileOptional = profileRepository.findById(profile.getId());
     if (profileOptional.isPresent()) {
       profile.setCreatedAt(profileOptional.get().getCreatedAt());
+
+      if (profile.getTargetGradeByDefault() != 0) {
+        int targetGradeByDefault = profile.getTargetGradeByDefault();
+        profile.setSkills(profile.getSkills().stream()
+            .filter(skillInfo -> skillInfo.getTargetGrade() == 0)
+            .peek(skillInfo -> skillInfo.setTargetGrade(targetGradeByDefault))
+            .collect(Collectors.toList()));
+      }
+
       return profileRepository.save(profile);
     } else {
       throw new NoSuchProfileException();
@@ -27,6 +37,12 @@ public class ProfileServiceImpl implements ProfileService {
 
   @Override
   public Profile addProfile(Profile profile) {
+    if (profile.getTargetGradeByDefault() != 0) {
+      int targetGradeByDefault = profile.getTargetGradeByDefault();
+      profile.setSkills(profile.getSkills().stream()
+          .peek(skillInfo -> skillInfo.setTargetGrade(targetGradeByDefault))
+          .collect(Collectors.toList()));
+    }
     return profileRepository.save(profile);
   }
 
@@ -45,4 +61,8 @@ public class ProfileServiceImpl implements ProfileService {
     profileRepository.deleteById(id);
   }
 
+  @Override
+  public void deleteProfilesByFilter(ProfilesFilter profilesFilter) {
+
+  }
 }

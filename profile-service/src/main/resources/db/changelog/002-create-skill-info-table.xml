@@ -12,7 +12,7 @@
                 <constraints nullable="false"/>
             </column>
             <column name="artifact" type="TEXT"/>
-            <column name="current_grade" type="INT"/>
+            <column name="target_grade" type="INT"/>
         </createTable>
         <createTable tableName="profile_skills">
             <column name="profile_id" type="UUID">
