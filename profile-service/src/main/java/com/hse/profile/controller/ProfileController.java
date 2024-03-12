@@ -105,7 +105,7 @@ public class ProfileController {
     }
   }
 
-  @GetMapping("/approve")
+  @PostMapping("/approve")
   public ProfileDto approveSkillByReviewIdAndReviewGradeId(
       @RequestBody ApproveDto approveDto,
       @RequestHeader(HttpHeaders.AUTHORIZATION) String token) {

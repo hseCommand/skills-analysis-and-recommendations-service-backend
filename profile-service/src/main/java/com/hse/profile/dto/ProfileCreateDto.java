@@ -10,11 +10,13 @@ import lombok.Data;
 public class ProfileCreateDto {
   private String status;
 
+  private String userLogin;
+
   private String skillType;
 
   private String unitType;
 
-  private int targetGradeByDefault;
+  private Integer targetGradeByDefault;
 
   private List<SkillInfoCreateDto> skills;
 }

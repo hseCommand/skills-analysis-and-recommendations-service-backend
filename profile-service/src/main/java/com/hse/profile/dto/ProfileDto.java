@@ -11,6 +11,8 @@ import lombok.Data;
 public class ProfileDto {
   private UUID id;
 
+  private String userLogin;
+
   private String createdAt;
 
   private String status;
@@ -19,7 +21,7 @@ public class ProfileDto {
 
   private String unitType;
 
-  private int targetGradeByDefault;
+  private Integer targetGradeByDefault;
 
   private List<SkillInfoDto> skills;
 

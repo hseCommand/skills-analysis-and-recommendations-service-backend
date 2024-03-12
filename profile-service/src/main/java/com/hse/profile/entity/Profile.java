@@ -31,6 +31,9 @@ public class Profile {
   @Column(name = "user_id", nullable = false)
   private Long userId;
 
+  @Column(name = "user_login", nullable = false)
+  private String userLogin;
+
   @Column(name = "created_at", updatable = false, nullable = false)
   @Temporal(TemporalType.TIMESTAMP)
   @CreationTimestamp
