@@ -41,7 +41,7 @@ public class Profile {
   private ProfileStatus status;
 
   @Column(name = "target_grade_by_default")
-  private int targetGradeByDefault;
+  private Integer targetGradeByDefault;
 
   @Column(
       name = "skill_type",
@@ -57,13 +57,13 @@ public class Profile {
   @Enumerated(EnumType.STRING)
   private UnitType unitType;
 
+  @Column(name = "approver_id")
+  private Long approverId;
+
   @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
   @JoinTable(
       name = "profile_skills",
       joinColumns = @JoinColumn(name = "profile_id"),
       inverseJoinColumns = @JoinColumn(name = "skill_info_id"))
   private List<SkillInfo> skills;
-
-  @OneToMany(mappedBy = "profile")
-  private List<Review> reviews;
 }

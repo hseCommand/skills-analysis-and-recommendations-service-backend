@@ -2,11 +2,9 @@ package com.hse.profile.mapper;
 
 import com.hse.profile.dto.ProfileCreateDto;
 import com.hse.profile.dto.ProfileDto;
-import com.hse.profile.dto.ReviewCreateDto;
-import com.hse.profile.dto.ReviewDto;
+import com.hse.profile.dto.SkillInfoCreateDto;
 import com.hse.profile.dto.SkillInfoDto;
 import com.hse.profile.entity.Profile;
-import com.hse.profile.entity.Review;
 import com.hse.profile.entity.SkillInfo;
 import java.time.Instant;
 import java.time.ZoneId;
@@ -26,23 +24,9 @@ public interface ProfileMapper {
 
   Profile profileCreateDtoToProfile(ProfileCreateDto profileCreateDto);
 
-  SkillInfo skillInfoDtoToSkillInfo(SkillInfoDto skillInfoDto);
+  SkillInfo skillInfoCreateDtoToSkillInfo(SkillInfoCreateDto skillInfoDto);
 
   SkillInfoDto skillInfoToSkillInfoDto(SkillInfo skillInfo);
-
-  @Mapping(
-      target = "createdAt",
-      expression = "java(mapInstantToDateString(review.getCreatedAt()))")
-  @Mapping(
-      target = "profileId",
-      expression = "java(review.getProfile().getId())")
-  ReviewDto reviewToReviewDto(Review review);
-
-  @Mapping(target = "createdAt", ignore = true)
-  Review reviewDtoToReview(ReviewDto reviewDto);
-
-  Review reviewCreateDtoToReview(ReviewCreateDto reviewCreateDto);
-
 
   default String mapInstantToDateString(Instant instant) {
     if (instant != null) {

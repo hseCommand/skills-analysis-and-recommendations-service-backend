@@ -22,4 +22,5 @@ public class ProfileDto {
   private int targetGradeByDefault;
 
   private List<SkillInfoDto> skills;
+
 }

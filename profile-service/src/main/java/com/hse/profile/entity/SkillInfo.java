@@ -25,5 +25,11 @@ public class SkillInfo {
   private String artifact;
 
   @Column(name = "target_grade")
-  private int targetGrade;
+  private Integer targetGrade;
+
+  @Column(name = "self_review_grade")
+  private Integer selfReviewGrade;
+
+  @Column(name = "is_approve")
+  private Boolean isApprove;
 }

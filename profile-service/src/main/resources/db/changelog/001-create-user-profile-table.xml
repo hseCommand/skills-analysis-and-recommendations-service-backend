@@ -18,6 +18,7 @@
             <column name="target_grade_by_default" type="INT"/>
             <column name="skill_type" type="VARCHAR(20)" defaultValue="EMPLOYEE"/>
             <column name="unit_type" type="VARCHAR(20)" defaultValue="DEVELOPER"/>
+            <column name="approver_id" type="bigint"/>
         </createTable>
     </changeSet>
 </databaseChangeLog>

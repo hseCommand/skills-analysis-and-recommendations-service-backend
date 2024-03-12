@@ -18,5 +18,8 @@ public interface ProfileService {
 
   void deleteProfileById(UUID id);
 
-  void deleteProfilesByFilter(ProfilesFilter profilesFilter);
+  Profile approveSkillByProfileIdAndSkillInfoId(UUID profileId, Long skillInfoId,
+      Long approverId, boolean isApprove);
+
+  List<Profile> getProfilesByUserId(Long userId);
 }

@@ -1,7 +1,9 @@
 package com.hse.profile.controller;
 
+import com.hse.profile.dto.ApproveDto;
 import com.hse.profile.dto.ProfileCreateDto;
 import com.hse.profile.dto.ProfileDto;
+import com.hse.profile.dto.SkillInfoCreateDto;
 import com.hse.profile.dto.SkillInfoDto;
 import com.hse.profile.entity.Profile;
 import com.hse.profile.entity.SkillInfo;
@@ -60,7 +62,7 @@ public class ProfileController {
   @GetMapping("/all")
   public List<ProfileDto> getAllProfiles(
       @RequestHeader(value = HttpHeaders.AUTHORIZATION) String token) {
-    jwtUtil.validateTokenAndCheckAccessRights(token, "ADMIN", "SUPERVISOR");
+    jwtUtil.validateTokenAndCheckAccessRights(token, "ADMIN", "SUPERVISOR", "APPROVER");
 
     var profiles = profileService.getAllProfiles();
     return profiles.stream().map(profileMapper::profileToProfileDto).collect(Collectors.toList());
@@ -88,18 +90,31 @@ public class ProfileController {
   @PostMapping("/addSkill/{profile_id}")
   public SkillInfoDto addSkillToProfileById(
       @PathVariable UUID profile_id,
-      @RequestBody SkillInfoDto skillInfoDto,
+      @RequestBody SkillInfoCreateDto skillInfoCreateDto,
       @RequestHeader(HttpHeaders.AUTHORIZATION) String token) {
     Map<String, Object> userInfo = jwtUtil.validateTokenAndExtractData(token);
     Profile profile = profileService.getProfileById(profile_id);
 
     if (profile.getUserId() == Long.parseLong(userInfo.get("id").toString())) {
-      SkillInfo skillInfo = profileMapper.skillInfoDtoToSkillInfo(skillInfoDto);
+      SkillInfo skillInfo = profileMapper.skillInfoCreateDtoToSkillInfo(skillInfoCreateDto);
       profile.getSkills().add(skillInfo);
       profileService.updateProfile(profile);
       return profileMapper.skillInfoToSkillInfoDto(skillInfo);
     } else {
       throw new NotAuthorizedException("No access rights");
     }
+  }
+
+  @GetMapping("/approve")
+  public ProfileDto approveSkillByReviewIdAndReviewGradeId(
+      @RequestBody ApproveDto approveDto,
+      @RequestHeader(HttpHeaders.AUTHORIZATION) String token) {
+    jwtUtil.validateTokenAndCheckAccessRights(token, "ADMIN", "APPROVER");
+    Map<String, Object> userInfo = jwtUtil.validateTokenAndExtractData(token);
+    Long approverId = Long.parseLong(userInfo.get("id").toString());
+
+    return profileMapper.profileToProfileDto(
+        profileService.approveSkillByProfileIdAndSkillInfoId(approveDto.getProfileId(),
+            approveDto.getSkillInfoId(), approverId, approveDto.getIsApprove()));
   }
 }

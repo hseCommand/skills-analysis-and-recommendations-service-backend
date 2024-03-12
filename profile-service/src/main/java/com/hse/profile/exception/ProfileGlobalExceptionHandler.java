@@ -16,14 +16,7 @@ public class ProfileGlobalExceptionHandler {
   }
 
   @ExceptionHandler
-  public ResponseEntity<ErrorDto> handleException(NoSuchReviewException exception) {
-    ErrorDto incorrectData = new ErrorDto(exception.getMessage());
-
-    return new ResponseEntity<>(incorrectData, HttpStatus.NOT_FOUND);
-  }
-
-  @ExceptionHandler
-  public ResponseEntity<ErrorDto> handleException(NoSuchReviewGradeException exception) {
+  public ResponseEntity<ErrorDto> handleException(NoSuchSkillInfoException exception) {
     ErrorDto incorrectData = new ErrorDto(exception.getMessage());
 
     return new ResponseEntity<>(incorrectData, HttpStatus.NOT_FOUND);

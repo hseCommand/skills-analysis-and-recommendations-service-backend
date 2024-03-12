@@ -4,6 +4,4 @@
                    https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
     <include file="001-create-user-profile-table.xml" relativeToChangelogFile="true"/>
     <include file="002-create-skill-info-table.xml" relativeToChangelogFile="true"/>
-    <include file="003-create-review-table.xml" relativeToChangelogFile="true"/>
-
 </databaseChangeLog>

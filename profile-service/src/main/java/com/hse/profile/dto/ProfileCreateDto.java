@@ -16,5 +16,5 @@ public class ProfileCreateDto {
 
   private int targetGradeByDefault;
 
-  private List<SkillInfoDto> skills;
+  private List<SkillInfoCreateDto> skills;
 }
