@@ -23,10 +23,10 @@ public class ProfileServiceImpl implements ProfileService {
 
       if (profile.getTargetGradeByDefault() != 0) {
         int targetGradeByDefault = profile.getTargetGradeByDefault();
-        profile.setSkills(profile.getSkills().stream()
+        profile.getSkills().stream()
             .filter(skillInfo -> skillInfo.getTargetGrade() == 0)
             .peek(skillInfo -> skillInfo.setTargetGrade(targetGradeByDefault))
-            .collect(Collectors.toList()));
+            .collect(Collectors.toList());
       }
 
       return profileRepository.save(profile);
