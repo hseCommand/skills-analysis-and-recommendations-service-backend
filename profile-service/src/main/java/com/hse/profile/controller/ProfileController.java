@@ -3,6 +3,8 @@ package com.hse.profile.controller;
 import com.hse.profile.dto.ApproveDto;
 import com.hse.profile.dto.ProfileCreateDto;
 import com.hse.profile.dto.ProfileDto;
+import com.hse.profile.dto.ReviewProfileDto;
+import com.hse.profile.dto.ReviewSkillInfoDto;
 import com.hse.profile.dto.SkillInfoCreateDto;
 import com.hse.profile.dto.SkillInfoDto;
 import com.hse.profile.entity.Profile;
@@ -132,5 +134,28 @@ public class ProfileController {
     return profileMapper.profileToProfileDto(
         profileService.approveSkillByProfileIdAndSkillInfoId(approveDto.getProfileId(),
             approveDto.getSkillId(), approverId, approveDto.getIsApprove()));
+  }
+
+  @PostMapping("/review")
+  public ProfileDto setReviewFields(
+      @RequestBody ReviewProfileDto reviewProfileDto,
+      @RequestHeader(HttpHeaders.AUTHORIZATION) String token) {
+    jwtUtil.validateTokenAndCheckAccessRights(token, "ADMIN", "APPROVER");
+    Map<String, Object> userInfo = jwtUtil.validateTokenAndExtractData(token);
+    Long approverId = Long.parseLong(userInfo.get("id").toString());
+    Profile profileFromBase = profileService.getProfileById(reviewProfileDto.getProfileId());
+
+    profileFromBase.setApproverId(approverId);
+    profileFromBase.setProfileComment(reviewProfileDto.getProfileComment());
+
+    profileFromBase.getSkills().forEach(skillInfo -> {
+      ReviewSkillInfoDto foundSkillInfo = reviewProfileDto.getReviewSkills().stream()
+          .filter(reviewSkill -> reviewSkill.getSkillId() == skillInfo.getSkillId())
+          .findFirst().orElseThrow();
+      skillInfo.setSkillComment(foundSkillInfo.getSkillComment());
+      skillInfo.setIsApprove(foundSkillInfo.getIsApprove());
+    });
+
+    return profileMapper.profileToProfileDto(profileService.updateProfile(profileFromBase));
   }
 }
