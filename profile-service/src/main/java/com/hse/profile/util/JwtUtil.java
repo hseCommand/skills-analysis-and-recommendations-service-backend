@@ -1,5 +1,6 @@
 package com.hse.profile.util;
 
+import com.hse.profile.exception.NoAccessRightsExceptions;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.io.Decoders;
@@ -36,7 +37,7 @@ public class JwtUtil {
     Map<String, Object> userInfo = validateTokenAndExtractData(token);
     String rolesStr = userInfo.get("roles").toString();
     if (Arrays.stream(roles).noneMatch(rolesStr::contains)) {
-      throw new NotAuthorizedException("No access rights");
+      throw new NoAccessRightsExceptions();
     }
   }
 }

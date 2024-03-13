@@ -7,9 +7,11 @@ import com.hse.profile.dto.SkillInfoCreateDto;
 import com.hse.profile.dto.SkillInfoDto;
 import com.hse.profile.entity.Profile;
 import com.hse.profile.entity.SkillInfo;
+import com.hse.profile.exception.NoAccessRightsExceptions;
 import com.hse.profile.mapper.ProfileMapper;
 import com.hse.profile.service.ProfileService;
 import com.hse.profile.util.JwtUtil;
+import io.jsonwebtoken.JwtException;
 import jakarta.ws.rs.NotAuthorizedException;
 import java.util.List;
 import java.util.Map;
@@ -69,9 +71,15 @@ public class ProfileController {
   @GetMapping("/all")
   public List<ProfileDto> getAllProfiles(
       @RequestHeader(value = HttpHeaders.AUTHORIZATION) String token) {
-    jwtUtil.validateTokenAndCheckAccessRights(token, "ADMIN", "SUPERVISOR", "APPROVER");
-
-    var profiles = profileService.getAllProfiles();
+    List<Profile> profiles;
+    try {
+      jwtUtil.validateTokenAndCheckAccessRights(token, "ADMIN", "SUPERVISOR", "APPROVER");
+      profiles = profileService.getAllProfiles();
+    } catch (NoAccessRightsExceptions e) {
+      Map<String, Object> userInfo = jwtUtil.validateTokenAndExtractData(token);
+      Long userId = Long.parseLong(userInfo.get("id").toString());
+      profiles = profileService.getProfilesByUserId(userId);
+    }
     return profiles.stream().map(profileMapper::profileToProfileDto).collect(Collectors.toList());
   }
 
