@@ -63,6 +63,9 @@ public class Profile {
   @Column(name = "approver_id")
   private Long approverId;
 
+  @Column(name = "profile_comment")
+  private String profileComment;
+
   @OneToMany(mappedBy = "profile", cascade = CascadeType.ALL, orphanRemoval = true)
   private List<SkillInfo> skills;
 }

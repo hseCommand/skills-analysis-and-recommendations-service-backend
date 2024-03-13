@@ -15,6 +15,7 @@
             <column name="target_grade" type="INT"/>
             <column name="self_review_grade" type="INT"/>
             <column name="is_approve" type="boolean"/>
+            <column name="skill_comment" type="TEXT"/>
             <column name="profile_id" type="UUID">
                 <constraints nullable="false"/>
             </column>

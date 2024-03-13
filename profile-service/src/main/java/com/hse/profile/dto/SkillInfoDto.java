@@ -15,4 +15,6 @@ public class SkillInfoDto {
   private Integer selfReviewGrade;
 
   private Boolean isApprove;
+
+  private String skillComment;
 }

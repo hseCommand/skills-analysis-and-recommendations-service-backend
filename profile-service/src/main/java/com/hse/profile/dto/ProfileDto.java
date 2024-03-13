@@ -23,6 +23,7 @@ public class ProfileDto {
 
   private Integer targetGradeByDefault;
 
-  private List<SkillInfoDto> skills;
+  private String profileComment;
 
+  private List<SkillInfoDto> skills;
 }

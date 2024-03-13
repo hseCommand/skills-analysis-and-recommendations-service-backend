@@ -36,6 +36,9 @@ public class SkillInfo {
   @Column(name = "is_approve")
   private Boolean isApprove;
 
+  @Column(name = "skill_comment")
+  private String skillComment;
+
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "profile_id", nullable = false)
   private Profile profile;
