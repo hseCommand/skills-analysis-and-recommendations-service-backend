@@ -40,6 +40,7 @@ public class ProfileController {
 
     Profile profile = profileMapper.profileCreateDtoToProfile(profileCreateDto);
     profile.setUserId(userId);
+    profile.getSkills().forEach(skillInfo -> skillInfo.setProfile(profile));
 
     return profileMapper.profileToProfileDto(profileService.addProfile(profile));
   }
@@ -51,6 +52,12 @@ public class ProfileController {
     Profile profile = profileMapper.profileDtoToProfile(profileDto);
     Profile profileFromBase = profileService.getProfileById(profile.getId());
     profile.setUserId(profileFromBase.getUserId());
+    profile.getSkills().forEach(skillInfo -> {
+      skillInfo.setId(profileFromBase.getSkills().stream()
+          .filter(skillInfoFromBase -> skillInfo.getSkillId() == skillInfoFromBase.getSkillId())
+          .findFirst().orElseThrow().getId());
+      skillInfo.setProfile(profile);
+    });
 
     if (profile.getUserId() != Long.parseLong(userInfo.get("id").toString())) {
       throw new NotAuthorizedException("No access rights");
@@ -97,6 +104,7 @@ public class ProfileController {
 
     if (profile.getUserId() == Long.parseLong(userInfo.get("id").toString())) {
       SkillInfo skillInfo = profileMapper.skillInfoCreateDtoToSkillInfo(skillInfoCreateDto);
+      skillInfo.setProfile(profile);
       profile.getSkills().add(skillInfo);
       profileService.updateProfile(profile);
       return profileMapper.skillInfoToSkillInfoDto(skillInfo);
@@ -115,6 +123,6 @@ public class ProfileController {
 
     return profileMapper.profileToProfileDto(
         profileService.approveSkillByProfileIdAndSkillInfoId(approveDto.getProfileId(),
-            approveDto.getSkillInfoId(), approverId, approveDto.getIsApprove()));
+            approveDto.getSkillId(), approverId, approveDto.getIsApprove()));
   }
 }

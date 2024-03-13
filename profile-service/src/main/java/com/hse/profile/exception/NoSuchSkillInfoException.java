@@ -7,6 +7,6 @@ public class NoSuchSkillInfoException extends RuntimeException {
   private static final long serialVersionUID = 1578312731813573742L;
 
   public NoSuchSkillInfoException() {
-    super("Requested review not found");
+    super("Requested skillInfo not found");
   }
 }

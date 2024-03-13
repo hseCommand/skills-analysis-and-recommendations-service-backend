@@ -15,25 +15,14 @@
             <column name="target_grade" type="INT"/>
             <column name="self_review_grade" type="INT"/>
             <column name="is_approve" type="boolean"/>
-        </createTable>
-        <createTable tableName="profile_skills">
             <column name="profile_id" type="UUID">
                 <constraints nullable="false"/>
             </column>
-            <column name="skill_info_id" type="bigint">
-                <constraints nullable="false"/>
-            </column>
         </createTable>
-        <addPrimaryKey columnNames="profile_id, skill_info_id" tableName="profile_skills" constraintName="pk_profile_skills"/>
-        <addForeignKeyConstraint constraintName="fk_profile_skills_profile"
-                                 baseTableName="profile_skills"
+        <addForeignKeyConstraint constraintName="fk_profile_skill_info"
+                                 baseTableName="skill_info"
                                  baseColumnNames="profile_id"
                                  referencedTableName="profile"
-                                 referencedColumnNames="id"/>
-        <addForeignKeyConstraint constraintName="fk_profile_skills_skill_info"
-                                 baseTableName="profile_skills"
-                                 baseColumnNames="skill_info_id"
-                                 referencedTableName="skill_info"
                                  referencedColumnNames="id"/>
     </changeSet>
 </databaseChangeLog>

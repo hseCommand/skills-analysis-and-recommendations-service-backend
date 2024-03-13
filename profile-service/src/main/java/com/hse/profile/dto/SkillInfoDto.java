@@ -6,8 +6,6 @@ import lombok.Data;
 @Data
 public class SkillInfoDto {
   @NotNull
-  private Long id;
-  @NotNull
   private Long skillId;
 
   private String artifact;

@@ -63,10 +63,6 @@ public class Profile {
   @Column(name = "approver_id")
   private Long approverId;
 
-  @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-  @JoinTable(
-      name = "profile_skills",
-      joinColumns = @JoinColumn(name = "profile_id"),
-      inverseJoinColumns = @JoinColumn(name = "skill_info_id"))
+  @OneToMany(mappedBy = "profile", cascade = CascadeType.ALL, orphanRemoval = true)
   private List<SkillInfo> skills;
 }

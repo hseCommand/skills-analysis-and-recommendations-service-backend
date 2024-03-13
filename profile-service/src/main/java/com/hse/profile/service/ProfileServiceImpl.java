@@ -66,13 +66,13 @@ public class ProfileServiceImpl implements ProfileService {
   }
 
   @Override
-  public Profile approveSkillByProfileIdAndSkillInfoId(UUID profileId, Long skillInfoId,
+  public Profile approveSkillByProfileIdAndSkillInfoId(UUID profileId, Long skillId,
       Long approverId, boolean isApprove) {
     Profile profile = profileRepository.findById(profileId)
         .orElseThrow(NoSuchProfileException::new);
     profile.setApproverId(approverId);
     SkillInfo skillInfoFromBase = profile.getSkills().stream().filter(
-        skillInfo -> skillInfo.getId() == skillInfoId).findFirst().orElseThrow(
+        skillInfo -> skillInfo.getSkillId() == skillId).findFirst().orElseThrow(
         NoSuchSkillInfoException::new);
     skillInfoFromBase.setIsApprove(isApprove);
     profileRepository.save(profile);

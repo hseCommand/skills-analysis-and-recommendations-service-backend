@@ -9,7 +9,7 @@ public class ApproveDto {
   @NotNull
   private UUID profileId;
   @NotNull
-  private Long skillInfoId;
+  private Long skillId;
   @NotNull
   private Boolean isApprove;
 }
