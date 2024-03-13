@@ -42,9 +42,10 @@ public class ProfileServiceImpl implements ProfileService {
   public Profile addProfile(Profile profile) {
     if (profile.getTargetGradeByDefault() != 0) {
       int targetGradeByDefault = profile.getTargetGradeByDefault();
-      profile.setSkills(profile.getSkills().stream()
+      profile.getSkills().stream()
+          .filter(skillInfo -> skillInfo.getTargetGrade() == null)
           .peek(skillInfo -> skillInfo.setTargetGrade(targetGradeByDefault))
-          .collect(Collectors.toList()));
+          .collect(Collectors.toList());
     }
     return profileRepository.save(profile);
   }
@@ -67,7 +68,8 @@ public class ProfileServiceImpl implements ProfileService {
   @Override
   public Profile approveSkillByProfileIdAndSkillInfoId(UUID profileId, Long skillInfoId,
       Long approverId, boolean isApprove) {
-    Profile profile = profileRepository.findById(profileId).orElseThrow(NoSuchProfileException::new);
+    Profile profile = profileRepository.findById(profileId)
+        .orElseThrow(NoSuchProfileException::new);
     profile.setApproverId(approverId);
     SkillInfo skillInfoFromBase = profile.getSkills().stream().filter(
         skillInfo -> skillInfo.getId() == skillInfoId).findFirst().orElseThrow(
