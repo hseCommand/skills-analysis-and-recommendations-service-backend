@@ -1,6 +1,7 @@
 package com.hse.profile.service;
 
 import com.hse.profile.entity.Profile;
+import com.hse.profile.entity.ProfileStatus;
 import com.hse.profile.entity.SkillInfo;
 import com.hse.profile.exception.NoSuchProfileException;
 import com.hse.profile.exception.NoSuchSkillInfoException;
@@ -32,6 +33,7 @@ public class ProfileServiceImpl implements ProfileService {
             .collect(Collectors.toList());
       }
 
+      checkProfileStatus(profile);
       return profileRepository.save(profile);
     } else {
       throw new NoSuchProfileException();
@@ -75,6 +77,7 @@ public class ProfileServiceImpl implements ProfileService {
         skillInfo -> skillInfo.getSkillId() == skillId).findFirst().orElseThrow(
         NoSuchSkillInfoException::new);
     skillInfoFromBase.setIsApprove(isApprove);
+    checkProfileStatus(profile);
     profileRepository.save(profile);
     return profile;
   }
@@ -82,5 +85,19 @@ public class ProfileServiceImpl implements ProfileService {
   @Override
   public List<Profile> getProfilesByUserId(Long userId) {
     return profileRepository.getProfilesByUserId(userId);
+  }
+
+  private void checkProfileStatus(Profile profile) {
+    boolean thereIsAnySkillWhichGraded = profile.getSkills().stream()
+        .anyMatch(skillInfo -> skillInfo.getIsApprove() != null);
+    if (thereIsAnySkillWhichGraded) {
+      boolean allSkillsAreGraded = profile.getSkills().stream()
+          .allMatch(skillInfo -> skillInfo.getIsApprove() != null);
+      if (allSkillsAreGraded) {
+        profile.setStatus(ProfileStatus.DONE);
+      } else {
+        profile.setStatus(ProfileStatus.IN_PROGRESS);
+      }
+    }
   }
 }
