@@ -1,8 +1,6 @@
 package com.hse.skillsevaluation.service;
 
-import com.hse.skillsevaluation.dto.FilterDto;
 import com.hse.skillsevaluation.entity.Skill;
-import com.hse.skillsevaluation.entity.Tag;
 import java.util.List;
 
 public interface SkillService {

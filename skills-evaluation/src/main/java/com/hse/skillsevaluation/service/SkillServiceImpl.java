@@ -1,19 +1,15 @@
 package com.hse.skillsevaluation.service;
 
-import com.hse.skillsevaluation.dto.FilterDto;
+import static com.hse.skillsevaluation.service.CustomSpecs.*;
+import static org.springframework.data.jpa.domain.Specification.*;
+
 import com.hse.skillsevaluation.entity.Skill;
-import com.hse.skillsevaluation.entity.Tag;
 import com.hse.skillsevaluation.exception_handling.NoSuchSkillException;
 import com.hse.skillsevaluation.repository.SkillRepository;
-
 import java.util.List;
-
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import static org.springframework.data.jpa.domain.Specification.*;
-import static com.hse.skillsevaluation.service.CustomSpecs.*;
 
 @Service
 @RequiredArgsConstructor
@@ -30,9 +26,7 @@ public class SkillServiceImpl implements SkillService {
   public List<Skill> getAllSkillsByFilter(Filter filter) {
     return skillRepository.findAll(
         where(byUnitType(filter.getUnitTypes()))
-            .and(bySkillType(filter.getSkillTypes())
-                .and(byTags(filter.getTags())))
-    );
+            .and(bySkillType(filter.getSkillTypes()).and(byTags(filter.getTags()))));
   }
 
   @Transactional
